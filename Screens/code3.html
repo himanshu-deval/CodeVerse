@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CodeVerse - Team Battle</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#135bec",
+            "background-light": "#f6f6f8",
+            "background-dark": "#101622",
+          },
+          fontFamily: {
+            "display": ["Space Grotesk", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col w-full max-w-6xl px-4 flex-1">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 px-4 sm:px-10 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.263 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M10.4485 13.8519C10.4749 13.9271 10.6203 14.246 11.379 14.7361C12.298 15.3298 13.7492 15.9145 15.6717 16.3735C18.0007 16.9296 20.8712 17.2655 24 17.2655C27.1288 17.2655 29.9993 16.9296 32.3283 16.3735C34.2508 15.9145 35.702 15.3298 36.621 14.7361C37.3796 14.246 37.5251 13.9271 37.5515 13.8519C37.5287 13.7876 37.4333 13.5973 37.0635 13.2931C36.5266 12.8516 35.6288 12.3647 34.343 11.9175C31.79 11.0295 28.1333 10.4437 24 10.4437C19.8667 10.4437 16.2099 11.0295 13.657 11.9175C12.3712 12.3647 11.4734 12.8516 10.9365 13.2931C10.5667 13.5973 10.4713 13.7876 10.4485 13.8519ZM37.5563 18.7877C36.3176 19.3925 34.8502 19.8839 33.2571 20.2642C30.5836 20.9025 27.3973 21.2655 24 21.2655C20.6027 21.2655 17.4164 20.9025 14.7429 20.2642C13.1498 19.8839 11.6824 19.3925 10.4436 18.7877V34.1275C10.4515 34.1545 10.5427 34.4867 11.379 35.027C12.298 35.6207 13.7492 36.2054 15.6717 36.6644C18.0007 37.2205 20.8712 37.5564 24 37.5564C27.1288 37.5564 29.9993 37.2205 32.3283 36.6644C34.2508 36.2054 35.702 35.6207 36.621 35.027C37.4573 34.4867 37.5485 34.1546 37.5563 34.1275V18.7877ZM41.5563 13.8546V34.1455C41.5563 36.1078 40.158 37.5042 38.7915 38.3869C37.3498 39.3182 35.4192 40.0389 33.2571 40.5551C30.5836 41.1934 27.3973 41.5564 24 41.5564C20.6027 41.5564 17.4164 41.1934 14.7429 40.5551C12.5808 40.0389 10.6502 39.3182 9.20848 38.3869C7.84205 37.5042 6.44365 36.1078 6.44365 34.1455L6.44365 13.8546C6.44365 12.2684 7.37223 11.0454 8.39581 10.2036C9.43325 9.3505 10.8137 8.67141 12.343 8.13948C15.4203 7.06909 19.5418 6.44366 24 6.44366C28.4582 6.44366 32.5797 7.06909 35.657 8.13948C37.1863 8.67141 38.5667 9.3505 39.6042 10.2036C40.6278 11.0454 41.5563 12.2684 41.5563 13.8546Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">CodeVerse</h2>
+</div>
+<label class="hidden lg:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-slate-400 flex border-none bg-white/5 items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-200 focus:outline-0 focus:ring-0 border-none bg-white/5 focus:border-none h-full placeholder:text-slate-400 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Search" value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4">
+<div class="hidden lg:flex items-center gap-9">
+<a class="text-slate-300 hover:text-white text-sm font-medium leading-normal" href="#">Head-to-Head</a>
+<a class="text-white text-sm font-medium leading-normal" href="#">Team Battle</a>
+<a class="text-slate-300 hover:text-white text-sm font-medium leading-normal" href="#">Tournaments</a>
+<a class="text-slate-300 hover:text-white text-sm font-medium leading-normal" href="#">Practice</a>
+</div>
+<div class="flex gap-2">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-white/5 hover:bg-white/10 text-slate-200 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-white/5 hover:bg-white/10 text-slate-200 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+<span class="material-symbols-outlined text-xl">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDR1TUqNkM_Rk5FJB7L0jDj2cL4UroZ1bXSkwk42nTTfrA65r2gbGcnvmTvWCaFMW85rD_fD1k0b10fUBES0ok-TD6CCxL2rtDvX0SNlTyCVZfo5EHbNhg5oaRZWhxG-juz3FWoTLzkD3pIXwO6m9S8xyvPsTHx-kIbNlc7IOqSR9TqgbsncebzdC7vj__DiAKcX6haOiBNnQCjX17KMVf3Onc-vavXdRfqZzXPYcNBHvwbBNr_kE8p8KpGgkPUWVuQ2K3xkgQupVQ");'></div>
+</div>
+</header>
+<main class="flex-1 mt-8">
+<div class="flex flex-wrap justify-between items-center gap-3 p-4">
+<div class="flex min-w-72 flex-col gap-3">
+<p class="text-white text-4xl font-black leading-tight tracking-[-0.033em]">Team Battle</p>
+<p class="text-slate-400 text-base font-normal leading-normal">Form teams, join competitions, and climb the leaderboards.</p>
+</div>
+</div>
+<div class="flex p-4 @container mt-4">
+<div class="flex w-full flex-col gap-4 @[520px]:flex-row @[520px]:justify-between items-center bg-white/5 p-6 rounded-xl border border-white/10">
+<div class="flex flex-col sm:flex-row gap-6 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg min-h-32 w-32" data-alt="Team Logo for The Syntax Sorcerers" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCuXTM0JxK1e3Mxl0Vd6QBNK_8zcz505-j0q2lNeG_-HBbRRQz9yfa4-1YjAg0IUgRvHHKJP8WkjrL_iesSkc7QNjlgUA0NWnsFlBGQ9mPWiQbDv-fg7LDZLMQUAKDaNbCUYGxW38huDSSoX3UDV0zitY0PPQb-8TejGLyZ3CMHutbUnbVvUGiyLjt1y2wngg45xzxn8lCqno1f9JpXYc6nCC0SUBe7iE-20xJLdAULUouPYs4UVGQGKOKJ8SAua2sh9ux50u10fZg");'></div>
+<div class="flex flex-col text-center sm:text-left">
+<p class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">The Syntax Sorcerers</p>
+<p class="text-slate-400 text-base font-normal leading-normal">Win/Loss: 24/7 | Team Rank: #12 | Total Coins: 15,300</p>
+<p class="text-slate-400 text-base font-normal leading-normal mt-1">We turn caffeine into code.</p>
+</div>
+</div>
+<div class="flex w-full max-w-[480px] gap-3 @[480px]:w-auto mt-4 sm:mt-0">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 text-white text-sm font-bold leading-normal tracking-[0.015em] flex-1 @[480px]:flex-auto">
+<span class="truncate">Invite Members</span>
+</button>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-primary/80 text-white text-sm font-bold leading-normal tracking-[0.015em] flex-1 @[480px]:flex-auto">
+<span class="truncate">Edit Profile</span>
+</button>
+</div>
+</div>
+</div>
+<div class="pb-3 mt-4">
+<div class="flex border-b border-white/10 px-4 gap-8">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary text-white pb-[13px] pt-4" href="#">
+<p class="text-white text-sm font-bold leading-normal tracking-[0.015em]">Overview</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-slate-400 hover:text-white pb-[13px] pt-4" href="#">
+<p class="text-slate-400 hover:text-white text-sm font-bold leading-normal tracking-[0.015em]">Competitions</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-slate-400 hover:text-white pb-[13px] pt-4" href="#">
+<p class="text-slate-400 hover:text-white text-sm font-bold leading-normal tracking-[0.015em]">Match History</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-slate-400 hover:text-white pb-[13px] pt-4" href="#">
+<p class="text-slate-400 hover:text-white text-sm font-bold leading-normal tracking-[0.015em]">Leaderboard</p>
+</a>
+</div>
+</div>
+<div class="p-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-1">
+<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5">Team Roster</h2>
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="Avatar for member 'CodeWizard'" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMvtZ2P6sODKsVgt4NXE_3T-prgkFAtdV8nbSn7wwEqQa_W94_OnGT5Bn_-4ENqKcE3JiuFK1lKX759Uaam5DFTJwUmSIqrkoF72wIAm18NBHKFV_3u78i82uBzQGnVPhV5iFJUntSFx2zXAHJ-D_XYzAcxV-c9CxPNd8F-CgoZtfk77p_mJYyfw2NSqryj6fxg7SaBmuIiW8L52oXXYSxLSfNi_a9oAj7UG1rUvVK4HW3g9xVVLmg9W807V6LD-l98CxjnOaKnTg");'></div>
+<span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 border-2 border-background-dark"></span>
+</div>
+<div>
+<p class="text-white font-semibold">CodeWizard</p>
+<p class="text-slate-400 text-sm">Captain</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer">more_vert</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="Avatar for member 'PixelPioneer'" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZkn6i1ukjZYidfFbOEvDdU0vWsgoc2x7H6qlJ3MQQs255qsoaYOKHnlL5kK5S_QXS7rYYaV7WfPDxd1W9hpGo6o8h2NJr8_A-pxA6PtDQJI3dkwS0xfTrb5X4L7wt_6lrtqGNVxTQcZwXm-V3pUOB47SJY70sdi6ms2TfUBVabq381tglQraferY8XFo61d8gwwzCFZa7uAiN_ynBnRAadpM4z9VGQK9jyBQ07n54JZEkd_3FlWXisJVtcuUhKTFUkhJEpNMZSdQ");'></div>
+<span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 border-2 border-background-dark"></span>
+</div>
+<div>
+<p class="text-white font-semibold">PixelPioneer</p>
+<p class="text-slate-400 text-sm">Member</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer">more_vert</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="Avatar for member 'LogicLass'" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBrxaHGKd1RtGCHNaQO1s3x_J_1VTVWy7Ai6K7xVjoLhnUTR4ySp1wyF1S6grEww7qWnfFqgw6bqNaLfqqBs5CWmD5RpNXyBf28pHJk3uaMdHpYex0srQzoYHhTpuNFxDDTqppu3cd91IW8vEKzWYGGu7g9YCxW6AhnLzmiMCkw7gcxiBfrYN0AVpt0VnRAcexDeXjU5HVOTaU0ht0nDGBfQZ9zDCJSANjZOlAgw9XTRlJYvbOMFlYss5Hfvm0417Xdz_FYAwysiWo");'></div>
+<span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-slate-500 border-2 border-background-dark"></span>
+</div>
+<div>
+<p class="text-white font-semibold">LogicLass</p>
+<p class="text-slate-400 text-sm">Member</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer">more_vert</span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-2">
+<h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5">Active Competitions</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-white/5 rounded-lg border border-white/10 p-6 flex flex-col gap-4">
+<h3 class="text-lg font-bold text-white">Algorithm Arena 3v3</h3>
+<div class="flex flex-col gap-2 text-sm text-slate-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-slate-400">group</span>
+<span>Team Format: 3v3</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-slate-400">monetization_on</span>
+<span>Entry: 500 Coins</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-slate-400">emoji_events</span>
+<span>Prize Pool: 10,000 Coins</span>
+</div>
+</div>
+<button class="w-full mt-2 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-primary/80 text-white text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Register Team</span>
+</button>
+</div>
+<div class="bg-white/5 rounded-lg border border-white/10 p-6 flex flex-col gap-4">
+<h3 class="text-lg font-bold text-white">Data Dash 5v5</h3>
+<div class="flex flex-col gap-2 text-sm text-slate-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-slate-400">group</span>
+<span>Team Format: 5v5</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-slate-400">monetization_on</span>
+<span>Entry: 1,000 Coins</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-slate-400">emoji_events</span>
+<span>Prize Pool: 25,000 Coins</span>
+</div>
+</div>
+<button class="w-full mt-2 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 text-white text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">View Details</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</div>
+</div>
+</body></html>
