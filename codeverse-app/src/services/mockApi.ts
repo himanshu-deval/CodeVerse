@@ -1,52 +1,27 @@
-// Mock API service
-// In a real application, you would use a library like Axios or fetch to make API calls.
-// For this example, we'll simulate API calls with timeouts to mimic network latency.
+import type { User } from '@/types/auth';
+import type { RegistrationData } from '@/types/registration';
 
-export const mockLogin = (email: string, pass: string) => {
+export const mockApi = {
+  login: ({ email, password }: Pick<RegistrationData, 'email' | 'password'>): Promise<User> => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (email === 'test@test.com' && pass === 'password') {
-          resolve({
-            data: {
-              name: 'Test User',
-              email: 'test@test.com',
-            },
-          });
+        if (email === 'test@test.com' && password === 'password') {
+          resolve({ name: 'Test User', email: 'test@test.com' });
         } else {
-          reject('Invalid credentials');
+          reject(new Error('Invalid credentials'));
         }
       }, 1000);
     });
-  };
-
-  export const mockFetchUserProfile = () => {
-    return new Promise((resolve) => {
+  },
+  register: ({ name, email, password }: RegistrationData): Promise<User> => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve({
-          data: {
-            name: 'Test User',
-            email: 'test@test.com',
-            bio: 'A passionate coder.',
-            // ...other profile data
-          },
-        });
+        if (name && email && password) {
+          resolve({ name, email });
+        } else {
+          reject(new Error('Invalid registration data'));
+        }
       }, 1000);
     });
-  };
-
-  export const mockFetchLeaderboard = () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          data: [
-            { id: 1, name: 'Alice', score: 1500 },
-            { id: 2, name: 'Bob', score: 1400 },
-            { id: 3, name: 'Charlie', score: 1350 },
-            // ...more leaderboard data
-          ],
-        });
-      }, 1000);
-    });
-  };
-
-  // You can add more mock API functions here as needed for other features.
+  },
+};
