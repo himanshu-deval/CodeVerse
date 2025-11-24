@@ -1,137 +1,121 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { mockCompetitions } from '@/services/mockData';
-
-interface CompetitionPageProps {}
+import React, { useState } from "react";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import {Tabs} from "@/components/ui/Tabs";
+import CompetitionCard from "@/components/ui/CompetiotionCard";
+import TeamMemberCard from "@/components/ui/TeamMEmberCard";
+import StatusDot from "@/components/ui/StatusDot";
 
 const CompetitionPage: React.FC = () => {
-  const { competitionId } = useParams<{ competitionId: string }>();
-  const [activeTab, setActiveTab] = useState('overview');
-  
-  // Find the competition based on ID
-  const competition = mockCompetitions.find(comp => comp.id === competitionId);
-  
-  if (!competition) {
-    return <div className="text-white p-4">Competition not found</div>;
-  }
+  const [activeTab, setActiveTab] = useState("overview");
 
   return (
-    <div className="w-full">
-      <div className="flex flex-wrap justify-between items-center gap-3 p-4">
-        <div className="flex min-w-72 flex-col gap-3">
-          <p className="text-white text-4xl font-black leading-tight tracking-[-0.033em]">{competition.title}</p>
-          <p className="text-slate-400 text-base font-normal leading-normal">{competition.description}</p>
-        </div>
+    <div className="mx-auto max-w-6xl px-4 py-8 space-y-10">
+      {/* PAGE HEADER */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl font-semibold text-white">
+          Team Battle: Algorithm Arena
+        </h1>
+        <p className="text-slate-400 text-sm">
+          Compete against other teams in a multi-round coding challenge.
+        </p>
       </div>
-      
-      <div className="pb-3 mt-4">
-        <div className="flex border-b border-white/10 px-4 gap-8">
-          <button 
-            className={`flex flex-col items-center justify-center pb-[13px] pt-4 border-b-[3px] ${activeTab === 'overview' ? 'border-b-blue-500 text-white' : 'border-b-transparent text-slate-400 hover:text-white'}`}
-            onClick={() => setActiveTab('overview')}
-          >
-            <p className="text-white text-sm font-bold leading-normal tracking-[0.015em]">Overview</p>
-          </button>
-          <button 
-            className={`flex flex-col items-center justify-center pb-[13px] pt-4 border-b-[3px] ${activeTab === 'problems' ? 'border-b-blue-500 text-white' : 'border-b-transparent text-slate-400 hover:text-white'}`}
-            onClick={() => setActiveTab('problems')}
-          >
-            <p className="text-slate-400 hover:text-white text-sm font-bold leading-normal tracking-[0.015em]">Problems</p>
-          </button>
-          <button 
-            className={`flex flex-col items-center justify-center pb-[13px] pt-4 border-b-[3px] ${activeTab === 'leaderboard' ? 'border-b-blue-500 text-white' : 'border-b-transparent text-slate-400 hover:text-white'}`}
-            onClick={() => setActiveTab('leaderboard')}
-          >
-            <p className="text-slate-400 hover:text-white text-sm font-bold leading-normal tracking-[0.015em]">Leaderboard</p>
-          </button>
-          <button 
-            className={`flex flex-col items-center justify-center pb-[13px] pt-4 border-b-[3px] ${activeTab === 'submissions' ? 'border-b-blue-500 text-white' : 'border-b-transparent text-slate-400 hover:text-white'}`}
-            onClick={() => setActiveTab('submissions')}
-          >
-            <p className="text-slate-400 hover:text-white text-sm font-bold leading-normal tracking-[0.015em]">Submissions</p>
-          </button>
-        </div>
-      </div>
-      
-      <div className="p-4">
-        <h2 className="text-white text-2xl font-bold mb-4">Competition Details</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-white/5 rounded-lg border border-white/10 p-6">
-            <h3 className="text-lg font-bold text-white mb-2">Start Time</h3>
-            <p className="text-slate-300">{competition.startTime}</p>
-          </div>
-          <div className="bg-white/5 rounded-lg border border-white/10 p-6">
-            <h3 className="text-lg font-bold text-white mb-2">Duration</h3>
-            <p className="text-slate-300">{competition.duration}</p>
-          </div>
-          <div className="bg-white/5 rounded-lg border border-white/10 p-6">
-            <h3 className="text-lg font-bold text-white mb-2">Participants</h3>
-            <p className="text-slate-300">{competition.participants} registered</p>
-          </div>
-          <div className="bg-white/5 rounded-lg border border-white/10 p-6">
-            <h3 className="text-lg font-bold text-white mb-2">Prizes</h3>
-            <p className="text-slate-300">{competition.prizes}</p>
-          </div>
-        </div>
-      </div>
-      
-      <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="md:col-span-2">
-          <h2 className="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3">Problems</h2>
-          <div className="space-y-4">
-            {competition.problems.map((problem, index) => (
-              <div key={problem.id} className="bg-white/5 rounded-lg border border-white/10 p-4 flex justify-between items-center">
-                <div>
-                  <h3 className="text-lg font-bold text-white">{problem.title}</h3>
-                  <p className="text-slate-400 text-sm">{problem.description.substring(0, 100)}...</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                    problem.difficulty === 'Easy' ? 'bg-green-500/10 text-green-400' : 
-                    problem.difficulty === 'Medium' ? 'bg-yellow-500/10 text-yellow-400' : 
-                    'bg-red-500/10 text-red-400'
-                  }`}>
-                    {problem.difficulty}
-                  </span>
-                  <span className="material-symbols-outlined text-slate-400 cursor-pointer">play_arrow</span>
-                </div>
+
+      {/* TABS */}
+      <Tabs
+        items={[
+          { value: "overview", label: "Overview" },
+          { value: "team", label: "Your Team" },
+          { value: "matches", label: "Matches" },
+          { value: "rewards", label: "Rewards" },
+        ]}
+        value={activeTab}
+        onChange={setActiveTab}
+      />
+
+      {/* TAB CONTENT */}
+      {activeTab === "overview" && (
+        <div className="grid md:grid-cols-3 gap-6">
+          {/* Left: Team Info */}
+          <div className="md:col-span-2 space-y-6">
+            {/* TEAM CARD */}
+            <Card>
+              <h2 className="text-sm font-semibold text-slate-100">
+                Your Team
+              </h2>
+              <p className="text-xs text-slate-400 mt-1">Code Warriors</p>
+
+              <div className="mt-4 space-y-3">
+                <TeamMemberCard name="Alex Ryder" role="Lead" status="online" />
+                <TeamMemberCard name="Jason Lee" role="Developer" status="online" />
+                <TeamMemberCard name="Mia Patel" role="Developer" status="offline" />
+                <TeamMemberCard name="Sara Kim" role="Analyst" status="online" />
               </div>
-            ))}
-          </div>
-        </div>
-        
-        <div>
-          <h2 className="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3">Leaderboard</h2>
-          <div className="bg-white/5 rounded-lg border border-white/10 p-4">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-yellow-400 font-bold">1</span>
-                  <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" style={{backgroundImage: `url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMvtZ2P6sODKsVgt4NXE_3T-prgkFAtdV8nbSn7wwEqQa_W94_OnGT5Bn_-4ENqKcE3JiuFK1lKX759Uaam5DFTJwUmSIqrkoF72wIAm18NBHKFV_3u78i82uBzQGnVPhV5iFJUntSFx2zXAHJ-D_XYzAcxV-c9CxPNd8F-CgoZtfk77p_mJYyfw2NSqryj6fxg7SaBmuIiW8L52oXXYSxLSfNi_a9oAj7UG1rUvVK4HW3g9xVVLmg9W807V6LD-l98CxjnOaKnTg")`}}></div>
-                  <span className="text-white">User1</span>
-                </div>
-                <span className="text-green-400">5/5</span>
+
+              <div className="mt-4">
+                <Button size="md" variant="secondary">
+                  Manage Team
+                </Button>
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-gray-400 font-bold">2</span>
-                  <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" style={{backgroundImage: `url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMvtZ2P6sODKsVgt4NXE_3T-prgkFAtdV8nbSn7wwEqQa_W94_OnGT5Bn_-4ENqKcE3JiuFK1lKX759Uaam5DFTJwUmSIqrkoF72wIAm18NBHKFV_3u78i82uBzQGnVPhV5iFJUntSFx2zXAHJ-D_XYzAcxV-c9CxPNd8F-CgoZtfk77p_mJYyfw2NSqryj6fxg7SaBmuIiW8L52oXXYSxLSfNi_a9oAj7UG1rUvVK4HW3g9xVVLmg9W807V6LD-l98CxjnOaKnTg")`}}></div>
-                  <span className="text-white">User2</span>
-                </div>
-                <span className="text-green-400">4/5</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-orange-400 font-bold">3</span>
-                  <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" style={{backgroundImage: `url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMvtZ2P6sODKsVgt4NXE_3T-prgkFAtdV8nbSn7wwEqQa_W94_OnGT5Bn_-4ENqKcE3JiuFK1lKX759Uaam5DFTJwUmSIqrkoF72wIAm18NBHKFV_3u78i82uBzQGnVPhV5iFJUntSFx2zXAHJ-D_XYzAcxV-c9CxPNd8F-CgoZtfk77p_mJYyfw2NSqryj6fxg7SaBmuIiW8L52oXXYSxLSfNi_a9oAj7UG1rUvVK4HW3g9xVVLmg9W807V6LD-l98CxjnOaKnTg")`}}></div>
-                  <span className="text-white">User3</span>
-                </div>
-                <span className="text-green-400">3/5</span>
-              </div>
+            </Card>
+
+            {/* STATS */}
+            <div className="grid grid-cols-3 gap-4">
+              <Card>
+                <h4 className="text-xs text-slate-400 uppercase">Rank</h4>
+                <p className="text-2xl font-semibold text-white mt-2">12</p>
+              </Card>
+              <Card>
+                <h4 className="text-xs text-slate-400 uppercase">Win Rate</h4>
+                <p className="text-2xl font-semibold text-emerald-400 mt-2">68%</p>
+              </Card>
+              <Card>
+                <h4 className="text-xs text-slate-400 uppercase">Battles Played</h4>
+                <p className="text-2xl font-semibold text-white mt-2">32</p>
+              </Card>
             </div>
           </div>
+
+          {/* Right: Active Competitions */}
+          <div className="space-y-4">
+            <h2 className="text-sm font-semibold text-slate-100">
+              Active Competitions
+            </h2>
+
+            <CompetitionCard
+              title="Data Structures Showdown"
+              format="Team of 4"
+              entry={150}
+              prize={50000}
+              primary
+            />
+
+            <CompetitionCard
+              title="Algo Marathon"
+              format="Team of 3"
+              entry={100}
+              prize={25000}
+            />
+
+            <CompetitionCard
+              title="Dynamic Programming Cup"
+              format="Team of 5"
+              entry={200}
+              prize={80000}
+            />
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* OTHER TABS PLACEHOLDER */}
+      {activeTab !== "overview" && (
+        <Card>
+          <p className="text-sm text-slate-400">
+            Content for{" "}
+            <span className="text-white font-semibold">{activeTab}</span> will go here.
+          </p>
+        </Card>
+      )}
     </div>
   );
 };

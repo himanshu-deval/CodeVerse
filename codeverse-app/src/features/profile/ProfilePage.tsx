@@ -1,201 +1,220 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectUser } from '@/features/auth/authSlice';
-
-interface MatchHistoryItem {
-  id: number;
-  type: 'WIN' | 'LOSS' | 'TEAM' | 'TOP 10';
-  title: string;
-  description: string;
-  coinsChange: string;
-  ratingChange: string;
-  date: string;
-}
+import React, { useState } from "react";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import { Tabs } from "@/components/ui/Tabs";
+import Badge from "@/components/ui/Badge";
+import ProgressBar from "@/components/ui/ProgressBar";
+import Avatar from "@/components/ui/Avatar";
 
 const ProfilePage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('overview');
-  const user = useSelector(selectUser);
+  const [tab, setTab] = useState("overview");
 
-  // Mock data for user statistics
-  const statsData = {
-    coins: 12500,
-    totalEarned: 56800,
-    achievements: 8,
-    problemsSolved: 258,
-    easySolved: 150,
-    mediumSolved: 92,
-    hardSolved: 16
-  };
+  const matchBadgeVariant = {
+    WIN: "success",
+    TEAM: "info",
+    LOSS: "danger",
+    "TOP 10": "warning",
+  } as const;
 
-  // Mock match history data
-  const matchHistory: MatchHistoryItem[] = [
-    { id: 1, type: 'WIN', title: 'Head-to-Head vs. CoderX', description: 'Algorithm Challenge - 2 days ago', coinsChange: '+50 Coins', ratingChange: 'Rating: +15', date: '2 days ago' },
-    { id: 2, type: 'TEAM', title: 'Team Battle: \'Code Warriors\'', description: 'Team placed 3rd - 5 days ago', coinsChange: '+250 Coins', ratingChange: 'Team Rating: +20', date: '5 days ago' },
-    { id: 3, type: 'LOSS', title: 'Head-to-Head vs. LogicMaster', description: 'Data Structures Duel - 1 week ago', coinsChange: '-20 Coins', ratingChange: 'Rating: -12', date: '1 week ago' },
-    { id: 4, type: 'TOP 10', title: 'Tournament: \'Global Code Sprint\'', description: 'Ranked 8th/500 - 2 weeks ago', coinsChange: '+1000 Coins', ratingChange: 'Rating: +45', date: '2 weeks ago' }
-  ];
-
-  // Recent problems data
-  const recentProblems = [
-    { title: 'Two Sum', difficulty: 'Easy' },
-    { title: 'Longest Substring Without Repeating Characters', difficulty: 'Medium' }
+  const matchHistory = [
+    {
+      type: "WIN",
+      title: "Head-to-Head vs. CoderX",
+      subtitle: "Algorithm Challenge · 2 days ago",
+      coins: "+50 Coins",
+      rating: "+15",
+    },
+    {
+      type: "TEAM",
+      title: "Team Battle: 'Code Warriors'",
+      subtitle: "Team placed 3rd · 5 days ago",
+      coins: "+250 Coins",
+      rating: "+20",
+    },
+    {
+      type: "LOSS",
+      title: "Head-to-Head vs. LogicMaster",
+      subtitle: "Data Structures Duel · 1 week ago",
+      coins: "-20 Coins",
+      rating: "-12",
+    },
+    {
+      type: "TOP 10",
+      title: "Tournament: 'Global Code Sprint'",
+      subtitle: "Ranked 8th/500 · 2 weeks ago",
+      coins: "+1000 Coins",
+      rating: "+45",
+    },
   ];
 
   return (
-    <div className="w-full">
-      <div className="flex p-4">
-        <div className="flex w-full flex-col gap-4">
-          <div className="flex gap-4">
-            <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAJCg3tQPOGOf0CPPI1RUw7NFNNrfmncq2ql7Jx6kNhGOaVCN2AcwT6IF2OTX7q-J7eKsByb5LFGZYrIWd30CTkd1JjmOtPp0DbPg_m_VQKA53VnbegYXKuNppLGofdHoKMMNjWIORgylpvOFG9xQ7jof_tUN99i8O_nu1kwJ7KBI7-uPeB4YTTj7MN5Z93HRN99l12WZIjyr8QyNlA02JdU-y4ce6o8tAQ9O1vsPE5eDIRkT3P5QvnKI88StxUcb4FKZMyv4nnwFM")'}}></div>
-            <div className="flex flex-col justify-center">
-              <p className="text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">{user?.name || 'Guest User'}</p>
-              <p className="text-slate-400 text-base font-normal leading-normal">Software Engineer | Competitive Coder</p>
-              <p className="text-slate-400 text-base font-normal leading-normal">Joined 2021</p>
-            </div>
+    <div className="mx-auto max-w-6xl space-y-8 px-4 py-8">
+      {/* Header */}
+      <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+        <div className="flex items-center gap-4">
+          <Avatar name="Alex Ryder" size="lg" />
+          <div>
+            <h1 className="text-2xl font-semibold text-slate-50">Alex Ryder</h1>
+            <p className="text-sm text-slate-400">Software Engineer · Competitive Coder</p>
+            <p className="mt-1 text-xs text-slate-500">Joined 2021</p>
           </div>
-          <button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/10 hover:bg-white/20 text-white text-sm font-bold leading-normal tracking-[0.015em] w-full max-w-[480px]">
-            <span className="truncate">Edit Profile</span>
-          </button>
         </div>
+        <Button>Edit Profile</Button>
       </div>
 
-      <div className="pb-3">
-        <div className="flex border-b border-white/10 px-4 gap-8">
-          <button 
-            className={`flex flex-col items-center justify-center pb-[13px] pt-4 border-b-[3px] ${activeTab === 'overview' ? 'border-b-white text-white' : 'border-b-transparent text-slate-400'}`}
-            onClick={() => setActiveTab('overview')}
-          >
-            <p className="text-sm font-bold leading-normal tracking-[0.015em]">Overview</p>
-          </button>
-          <button 
-            className={`flex flex-col items-center justify-center pb-[13px] pt-4 border-b-[3px] ${activeTab === 'matchHistory' ? 'border-b-white text-white' : 'border-b-transparent text-slate-400'}`}
-            onClick={() => setActiveTab('matchHistory')}
-          >
-            <p className="text-sm font-bold leading-normal tracking-[0.015em]">Match History</p>
-          </button>
-          <button 
-            className={`flex flex-col items-center justify-center pb-[13px] pt-4 border-b-[3px] ${activeTab === 'practice' ? 'border-b-white text-white' : 'border-b-transparent text-slate-400'}`}
-            onClick={() => setActiveTab('practice')}
-          >
-            <p className="text-sm font-bold leading-normal tracking-[0.015em]">Practice</p>
-          </button>
-          <button 
-            className={`flex flex-col items-center justify-center pb-[13px] pt-4 border-b-[3px] ${activeTab === 'submissions' ? 'border-b-white text-white' : 'border-b-transparent text-slate-400'}`}
-            onClick={() => setActiveTab('submissions')}
-          >
-            <p className="text-sm font-bold leading-normal tracking-[0.015em]">Submissions</p>
-          </button>
-          <button 
-            className={`flex flex-col items-center justify-center pb-[13px] pt-4 border-b-[3px] ${activeTab === 'achievements' ? 'border-b-white text-white' : 'border-b-transparent text-slate-400'}`}
-            onClick={() => setActiveTab('achievements')}
-          >
-            <p className="text-sm font-bold leading-normal tracking-[0.015em]">Achievements</p>
-          </button>
+      {/* Tabs */}
+      <Tabs
+        items={[
+          { value: "overview", label: "Overview" },
+          { value: "matches", label: "Match History" },
+          { value: "practice", label: "Practice" },
+          { value: "submissions", label: "Submissions" },
+          { value: "achievements", label: "Achievements" },
+        ]}
+        value={tab}
+        onChange={setTab}
+      />
+
+      {/* OVERVIEW TAB */}
+      {tab === "overview" && (
+        <div className="space-y-8">
+          {/* Stats row */}
+          <div className="grid gap-4 md:grid-cols-3">
+            <Card>
+              <h3 className="text-xs uppercase tracking-wide text-slate-400">
+                Current Balance
+              </h3>
+              <p className="mt-3 text-3xl font-semibold text-slate-50">12,500</p>
+            </Card>
+
+            <Card>
+              <h3 className="text-xs uppercase tracking-wide text-slate-400">
+                Total Earned
+              </h3>
+              <p className="mt-3 text-3xl font-semibold text-emerald-400">
+                56,800
+              </p>
+            </Card>
+
+            <Card>
+              <h3 className="text-xs uppercase tracking-wide text-slate-400">
+                Coin Achievements
+              </h3>
+              <p className="mt-3 text-3xl font-semibold text-purple-400">8</p>
+            </Card>
+          </div>
+
+          {/* Main content grid */}
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Match history */}
+            <Card>
+              <h2 className="text-sm font-semibold text-slate-100">Match History</h2>
+
+              <div className="mt-4 space-y-3">
+                {matchHistory.map((match) => (
+                  <div
+                    key={match.title}
+                    className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-3"
+                  >
+                    <div className="flex flex-col gap-1">
+                      <Badge
+                        variant={matchBadgeVariant[match.type as keyof typeof matchBadgeVariant]}
+                        className="w-fit text-[10px]"
+                      >
+                        {match.type}
+                      </Badge>
+
+                      <p className="text-sm font-medium text-slate-100">
+                        {match.title}
+                      </p>
+                      <p className="text-xs text-slate-400">{match.subtitle}</p>
+                    </div>
+
+                    <div className="text-right text-xs font-semibold">
+                      <p
+                        className={
+                          match.coins.startsWith("+")
+                            ? "text-emerald-400"
+                            : "text-rose-400"
+                        }
+                      >
+                        {match.coins}
+                      </p>
+                      <p className="mt-1 text-slate-400">Rating {match.rating}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            {/* Practice stats */}
+            <div className="space-y-4">
+              <Card>
+                <h2 className="text-sm font-semibold text-slate-100">Practice Statistics</h2>
+
+                <p className="mt-3 text-xs text-slate-400">Problems Solved</p>
+                <p className="mt-1 text-3xl font-semibold text-slate-50">258</p>
+                <p className="mt-1 text-xs text-slate-500">problems</p>
+
+                <div className="mt-4">
+                  <ProgressBar value={75} />
+                </div>
+              </Card>
+
+              <Card>
+                <h3 className="text-xs uppercase tracking-wide text-slate-400">
+                  Solved by Difficulty
+                </h3>
+
+                <div className="mt-3 space-y-2 text-sm">
+                  <p className="flex justify-between">
+                    <span className="text-emerald-400">Easy</span>
+                    <span className="text-slate-100">150</span>
+                  </p>
+
+                  <p className="flex justify-between">
+                    <span className="text-amber-400">Medium</span>
+                    <span className="text-slate-100">92</span>
+                  </p>
+
+                  <p className="flex justify-between">
+                    <span className="text-rose-400">Hard</span>
+                    <span className="text-slate-100">16</span>
+                  </p>
+                </div>
+              </Card>
+
+              <Card>
+                <h3 className="text-xs uppercase tracking-wide text-slate-400">
+                  Recently Completed Problems
+                </h3>
+
+                <div className="mt-3 space-y-2 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-100">Two Sum</span>
+                    <span className="text-emerald-400 text-xs">Easy</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-100">
+                      Longest Substring Without Repeating Characters
+                    </span>
+                    <span className="text-amber-400 text-xs">Medium</span>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className="p-4 space-y-8">
-        <section>
-          <h3 className="text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Coin Balance & Stats</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="flex flex-col gap-2 rounded-lg border border-white/10 p-4 items-start bg-gray-800">
-              <p className="text-slate-400 text-sm font-normal leading-normal">Current Balance</p>
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-yellow-400 text-3xl">toll</span>
-                <p className="text-white tracking-light text-3xl font-bold leading-tight">{statsData.coins}</p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2 rounded-lg border border-white/10 p-4 items-start bg-gray-800">
-              <p className="text-slate-400 text-sm font-normal leading-normal">Total Earned</p>
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-green-400 text-3xl">trending_up</span>
-                <p className="text-white tracking-light text-3xl font-bold leading-tight">{statsData.totalEarned}</p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2 rounded-lg border border-white/10 p-4 items-start bg-gray-800">
-              <p className="text-slate-400 text-sm font-normal leading-normal">Coin Achievements</p>
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-purple-400 text-3xl">emoji_events</span>
-                <p className="text-white tracking-light text-3xl font-bold leading-tight">{statsData.achievements}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <h3 className="text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Match History</h3>
-          <div className="flex flex-col gap-3">
-            {matchHistory.map((match) => (
-              <div key={match.id} className="grid grid-cols-[auto_1fr_auto] items-center gap-4 p-3 rounded-lg border border-white/10 bg-gray-800">
-                <span className={`font-bold text-sm px-2 py-0.5 rounded ${
-                  match.type === 'WIN' ? 'text-green-400 bg-green-900/50' : 
-                  match.type === 'LOSS' ? 'text-red-400 bg-red-900/50' : 
-                  match.type === 'TEAM' ? 'text-blue-400 bg-blue-900/50' : 
-                  'text-yellow-400 bg-yellow-900/50'
-                }`}>
-                  {match.type}
-                </span>
-                <div className="text-white">
-                  <p className="font-bold">{match.title}</p>
-                  <p className="text-xs text-slate-400">{match.description}</p>
-                </div>
-                <div className="text-right">
-                  <p className={`font-bold ${match.coinsChange.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>{match.coinsChange}</p>
-                  <p className="text-xs text-slate-400">{match.ratingChange}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section>
-          <h3 className="text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Practice Statistics</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex flex-col gap-4 rounded-lg border border-white/10 p-4 bg-gray-800">
-              <p className="text-slate-400 text-sm font-normal">Problems Solved</p>
-              <div className="flex items-baseline gap-2">
-                <p className="text-white tracking-light text-4xl font-bold leading-tight">{statsData.problemsSolved}</p>
-                <p className="text-slate-400 text-base">problems</p>
-              </div>
-              <div className="w-full bg-white/10 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '75%' }}></div>
-              </div>
-            </div>
-            <div className="rounded-lg border border-white/10 p-4 bg-gray-800">
-              <p className="text-slate-400 text-sm font-normal mb-2">Solved by Difficulty</p>
-              <div className="flex justify-between items-center py-1">
-                <p className="text-green-400">Easy</p>
-                <p className="text-white font-mono">{statsData.easySolved}</p>
-              </div>
-              <div className="flex justify-between items-center py-1">
-                <p className="text-yellow-400">Medium</p>
-                <p className="text-white font-mono">{statsData.mediumSolved}</p>
-              </div>
-              <div className="flex justify-between items-center py-1">
-                <p className="text-red-400">Hard</p>
-                <p className="text-white font-mono">{statsData.hardSolved}</p>
-              </div>
-            </div>
-          </div>
-          <div className="mt-4">
-            <h4 className="text-white text-md font-bold leading-tight mb-3">Recently Completed Problems</h4>
-            <div className="flex flex-col gap-2">
-              {recentProblems.map((problem, index) => (
-                <div key={index} className="flex justify-between items-center p-3 rounded-md bg-white/5">
-                  <p className="text-white">{problem.title}</p>
-                  <span className={`text-sm font-bold ${
-                    problem.difficulty === 'Easy' ? 'text-green-400' : 
-                    problem.difficulty === 'Medium' ? 'text-yellow-400' : 
-                    'text-red-400'
-                  }`}>
-                    {problem.difficulty}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      </div>
+      {/* OTHER TABS */}
+      {tab !== "overview" && (
+        <Card>
+          <p className="text-sm text-slate-400">
+            Content for <span className="font-semibold text-white">{tab}</span> will go here.
+          </p>
+        </Card>
+      )}
     </div>
   );
 };

@@ -1,62 +1,149 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectUser } from '@/features/auth/authSlice';
-import { mockDashboardData } from '@/services/mockDashboardData';
+import React from "react";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import Badge from "@/components/ui/Badge";
+import ProgressBar from "@/components/ui/ProgressBar";
 
 const DashboardPage: React.FC = () => {
-  const user = useSelector(selectUser);
-
   return (
-    <div className="w-full">
-      <div className="flex flex-wrap justify-between items-center gap-3 p-4">
-        <div className="flex min-w-72 flex-col gap-3">
-          <p className="text-white text-4xl font-black leading-tight tracking-[-0.033em]">Dashboard</p>
-          <p className="text-slate-400 text-base font-normal leading-normal">Welcome back, {user ? user.name : 'Guest'}! Ready to code?</p>
-        </div>
+    <div className="mx-auto max-w-6xl px-4 py-10 space-y-10">
+      {/* HEADER */}
+      <div>
+        <h1 className="text-2xl font-semibold text-white">Welcome back, Alex 👋</h1>
+        <p className="text-slate-400 text-sm mt-1">
+          Here’s an overview of your progress and ongoing challenges.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
-        {/* Upcoming Competitions */}
-        <div className="bg-white/5 rounded-lg shadow-lg p-6 border border-white/10">
-          <h2 className="text-2xl font-bold mb-4 text-white">Upcoming Competitions</h2>
-          {mockDashboardData.upcomingCompetitions.length > 0 ? (
-            <div className="space-y-4">
-              {mockDashboardData.upcomingCompetitions.map((competition) => (
-                <div key={competition.id} className="bg-gray-800 p-4 rounded-md hover:bg-gray-700 transition duration-200">
-                  <h3 className="text-xl font-semibold text-white">{competition.title}</h3>
-                  <p className="text-slate-400">{competition.date}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-slate-400">No upcoming competitions.</p>
-          )}
-        </div>
+      {/* QUICK STATS */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <p className="text-xs uppercase text-slate-400">Coins Earned</p>
+          <p className="text-3xl font-semibold text-emerald-400 mt-2">12,500</p>
+        </Card>
 
-        {/* Recent Activity */}
-        <div className="bg-white/5 rounded-lg shadow-lg p-6 border border-white/10">
-          <h2 className="text-2xl font-bold mb-4 text-white">Recent Activity</h2>
-          {mockDashboardData.recentActivity.length > 0 ? (
-            <div className="space-y-4">
-              {mockDashboardData.recentActivity.map((activity) => (
-                <div key={activity.id} className="bg-gray-800 p-4 rounded-md hover:bg-gray-700 transition duration-200">
-                  <h3 className="text-xl font-semibold text-white">
-                    {activity.type === 'submission'
-                      ? `Submission: ${activity.problem}`
-                      : `Competition: ${activity.title}`}
-                  </h3>
-                  <p className="text-slate-400">
-                    {activity.status && `Status: ${activity.status} - `}
-                    {activity.date}
+        <Card>
+          <p className="text-xs uppercase text-slate-400">Problems Solved</p>
+          <p className="text-3xl font-semibold text-slate-50 mt-2">258</p>
+        </Card>
+
+        <Card>
+          <p className="text-xs uppercase text-slate-400">Win Rate</p>
+          <p className="text-3xl font-semibold text-blue-400 mt-2">68%</p>
+        </Card>
+
+        <Card>
+          <p className="text-xs uppercase text-slate-400">Team Rank</p>
+          <p className="text-3xl font-semibold text-yellow-300 mt-2">#12</p>
+        </Card>
+      </div>
+
+      {/* GRID: RECENT ACTIVITY + UPCOMING COMPETITIONS */}
+      <div className="grid gap-8 lg:grid-cols-3">
+        {/* RECENT ACTIVITY */}
+        <Card className="lg:col-span-2">
+          <h2 className="text-sm font-semibold text-slate-100">Recent Activity</h2>
+
+          <div className="mt-4 space-y-4">
+            {[
+              {
+                title: "Solved ‘Two Sum’",
+                subtitle: "Easy · 3 hours ago",
+                difficulty: "success",
+              },
+              {
+                title: "Completed Team Battle",
+                subtitle: "Placed 3rd · 2 days ago",
+                difficulty: "info",
+              },
+              {
+                title: "Submitted solution to ‘Merge Intervals’",
+                subtitle: "Medium · 5 days ago",
+                difficulty: "warning",
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-3"
+              >
+                <div>
+                  <p className="text-sm text-slate-100">{item.title}</p>
+                  <p className="text-xs text-slate-400">{item.subtitle}</p>
+                </div>
+                <Badge variant={item.difficulty as any} className="text-[10px]">
+                  {item.subtitle.split("·")[0]}
+                </Badge>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* UPCOMING COMPETITIONS */}
+        <Card>
+          <h2 className="text-sm font-semibold text-slate-100">
+            Upcoming Competitions
+          </h2>
+
+          <div className="mt-4 space-y-4">
+            {[
+              {
+                title: "Data Structures Showdown",
+                date: "Starts in 2 days",
+                entry: 100,
+              },
+              {
+                title: "Algo Sprint Marathon",
+                date: "Starts in 5 days",
+                entry: 150,
+              },
+              {
+                title: "Dynamic Programming Cup",
+                date: "Starts in 1 week",
+                entry: 200,
+              },
+            ].map((comp) => (
+              <div
+                key={comp.title}
+                className="rounded-lg border border-slate-800 bg-slate-900/60 p-3"
+              >
+                <p className="text-sm text-slate-100">{comp.title}</p>
+                <p className="text-xs text-slate-400">{comp.date}</p>
+
+                <div className="mt-2 flex justify-between items-center">
+                  <p className="text-xs text-slate-400">
+                    Entry:{" "}
+                    <span className="text-slate-200">{comp.entry} Coins</span>
                   </p>
+                  <Button size="sm">Join</Button>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-slate-400">No recent activity.</p>
-          )}
-        </div>
+              </div>
+            ))}
+          </div>
+        </Card>
       </div>
+
+      {/* SUGGESTED PRACTICE */}
+      <Card>
+        <h2 className="text-sm font-semibold text-slate-100">
+          Suggested Practice
+        </h2>
+
+        <div className="mt-4 space-y-3">
+          {[
+            { title: "Rotate Array", difficulty: "Easy", color: "success" },
+            { title: "Group Anagrams", difficulty: "Medium", color: "warning" },
+            { title: "Maximal Rectangle", difficulty: "Hard", color: "danger" },
+          ].map((p) => (
+            <div
+              key={p.title}
+              className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/60 p-3"
+            >
+              <p className="text-sm text-slate-100">{p.title}</p>
+              <Badge variant={p.color as any}>{p.difficulty}</Badge>
+            </div>
+          ))}
+        </div>
+      </Card>
     </div>
   );
 };
